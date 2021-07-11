@@ -16,6 +16,8 @@ export default function SignInSignUpScreen({ navigation }) {
   const [loading, setLoading] = useState(false)
   const [errorText, setErrorText] = useState('')
 
+  const [isLogIn, setIsLogIn] = useState(true)
+
   async function login() {
     console.log("---- Login time ----");
     Keyboard.dismiss();
@@ -42,7 +44,7 @@ export default function SignInSignUpScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Log In
+        {isLogIn ? "Log In" : "Sign Up"}
       </Text>
       <View style={styles.inputView}>
         <TextInput
@@ -63,11 +65,22 @@ export default function SignInSignUpScreen({ navigation }) {
         />
       </View>
 
+      {isLogIn ? <View/> :
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Confirm Password:"
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+            onChangeText={(pw) => setConfirmPassword(pw)}
+          />
+        </View>}
+
       <View/>
       <View>
         <View style={{flexDirection: "row"}}>
           <TouchableOpacity style={styles.button} onPress={login}>
-            <Text style={styles.buttonText}> Log In </Text>
+            <Text style={styles.buttonText}> {isLogIn ? "Log In" : "Sign Up"} </Text>
           </TouchableOpacity>
           {loading ? <ActivityIndicator style={{ marginLeft: 10 }}/> : <View/>}
         </View>
@@ -75,6 +88,13 @@ export default function SignInSignUpScreen({ navigation }) {
       <Text style={styles.errorText}>
         {errorText}
       </Text>
+      <TouchableOpacity
+        onPress={() => {
+          setIsLogIn(!isLogIn);
+          setErrorText("");
+        }}>
+          <Text style={styles.switchText}> {isLogIn ? "No account? Sign up now." : "Already have an account? Log in here."}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
