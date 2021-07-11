@@ -39,9 +39,6 @@ export default function SignInSignUpScreen({ navigation }) {
       console.log("Error logging in!");
       console.log(error);
       setErrorText(error.response.data.description);
-      if (error.response.status == 404) {
-        setErrorText("User does not exist")
-      }
     }
   }
 
