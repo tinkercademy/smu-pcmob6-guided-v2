@@ -55,6 +55,12 @@ export default function IndexScreen({ navigation, route }) {
     }
   }
 
+  async function onRefresh() {
+    setRefreshing(true);
+    const response = await getPosts()
+    setRefreshing(false);
+  }
+
   function addPost() {
     
   }
@@ -93,6 +99,10 @@ export default function IndexScreen({ navigation, route }) {
         renderItem={renderItem}
         style={{ width: "100%" }}
         keyExtractor={(item) => item.id.toString()}
+        refreshControl={<RefreshControl
+          colors={["#9Bd35A", "#689F38"]}
+          refreshing={refreshing}
+          onRefresh={onRefresh}/>}
       />
     </View>
   );
