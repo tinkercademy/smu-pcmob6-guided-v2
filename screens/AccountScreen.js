@@ -4,7 +4,7 @@ import { commonStyles, lightStyles, darkStyles } from "../styles/commonStyles";
 import axios from "axios";
 import { API, API_WHOAMI } from "../constants/API";
 import { useDispatch, useSelector } from "react-redux";
-import { lightModeAction, darkModeAction } from '../redux/ducks/accountPref';
+import { changeModeAction } from '../redux/ducks/accountPref';
 import { logOutAction } from "../redux/ducks/blogAuth";
 
 export default function AccountScreen({ navigation }) {
@@ -48,7 +48,7 @@ export default function AccountScreen({ navigation }) {
   }
 
   function switchMode() {
-    dispatch(isDark ? lightModeAction() : darkModeAction())
+    dispatch(changeModeAction())
   }
 
   useEffect(() => {
