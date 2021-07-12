@@ -4,7 +4,7 @@ import { commonStyles, lightStyles, darkStyles } from "../styles/commonStyles";
 import axios from "axios";
 import { API, API_WHOAMI } from "../constants/API";
 import { useDispatch, useSelector } from "react-redux";
-import { changeModeAction } from '../redux/ducks/accountPref';
+import { changeModeAction, deletePicAction } from '../redux/ducks/accountPref';
 import { logOutAction } from "../redux/ducks/blogAuth";
 
 export default function AccountScreen({ navigation }) {
@@ -67,6 +67,11 @@ export default function AccountScreen({ navigation }) {
     ).start()
   }
 
+  function deletePhoto() {
+    dispatch(deletePicAction())
+    navigation.navigate("Camera")
+  }
+
   useEffect(() => {
     console.log("Setting up nav listener");
     // Check for when we come back to this screen
@@ -82,7 +87,7 @@ export default function AccountScreen({ navigation }) {
   return (
     <View style={[styles.container, { alignItems: "center" }]}>
       <Text style={[styles.title, styles.text, { margin: 30 }]}> Hello {username} !</Text>
-      <View style={{height: 320, justifyContent: "center"}}>
+      <View style={{height: profilePicture == null ? 0 : 320, justifyContent: "center"}}>
         {profilePicture == null ? <View /> :
           <TouchableWithoutFeedback onPress={changePicSize}>
             <Animated.Image
@@ -95,8 +100,8 @@ export default function AccountScreen({ navigation }) {
           </TouchableWithoutFeedback>
         }
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
-          <Text style={{ marginTop: 10, fontSize: 20, color: "#0000EE" }}> No profile picture. Click to take one. </Text>
+      <TouchableOpacity onPress={() => profilePicture == null ? navigation.navigate("Camera") : deletePhoto()}>
+          <Text style={{ marginTop: 10, fontSize: 20, color: "#0000EE" }}> { profilePicture == null ? "No profile picture. Click to take one." : "Delete this photo and take another one."} </Text>
           </TouchableOpacity>
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", margin: 20}}>
         <Text style={[styles.content, styles.text]}> Dark Mode? </Text>
