@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, FlatList, RefreshControl} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API, API_POSTS } from "../constants/API";
 import { lightStyles } from "../styles/commonStyles";
+import { useSelector } from "react-redux";
 
 export default function IndexScreen({ navigation, route }) {
 
   const [posts, setPosts] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const styles = lightStyles;
+  const token = useSelector((state) => state.auth.token);
 
   // This is to set up the top right button
   useEffect(() => {
@@ -39,7 +40,6 @@ export default function IndexScreen({ navigation, route }) {
   }, []);
 
   async function getPosts() {
-    const token = await AsyncStorage.getItem("token");
     try {
       const response = await axios.get(API + API_POSTS, {
         headers: { Authorization: `JWT ${token}` },
@@ -49,6 +49,7 @@ export default function IndexScreen({ navigation, route }) {
       return "completed"
     } catch (error) {
       console.log(error.response.data);
+      console.log(token)
       if (error.response.data.error = "Invalid token") {
         navigation.navigate("SignInSignUp");
       }
@@ -66,7 +67,6 @@ export default function IndexScreen({ navigation, route }) {
   }
 
   async function deletePost(id) {
-    const token = await AsyncStorage.getItem("token");
     console.log("Deleting " + id);
     try {
       const response = await axios.delete(API + API_POSTS + `/${id}`, {

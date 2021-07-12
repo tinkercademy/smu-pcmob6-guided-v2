@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator, TouchableOpacity, Text, View, Switch, Animated, TouchableWithoutFeedback } from "react-native";
 import { lightStyles } from "../styles/commonStyles";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { API, API_WHOAMI } from "../constants/API";
+import { useSelector } from "react-redux";
 
 export default function AccountScreen({ navigation }) {
 
   const [username, setUsername] = useState(null);
 
   const styles = lightStyles;
+  const token = useSelector((state) => state.auth.token)
 
   async function getUsername() {
     console.log("---- Getting user name ----");
-    const token = await AsyncStorage.getItem("token");
     console.log(`Token is ${token}`);
     try {
       const response = await axios.get(API + API_WHOAMI, {

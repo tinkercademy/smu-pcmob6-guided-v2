@@ -10,15 +10,15 @@ export function logOutAction() {
 }
 
 const initialState = {
-  auth: null,
+  token: null,
 }
 
 export default function blogAuthReducer(state = initialState, action) {
   switch (action.type) {
     case "log_in":
-      return { ...state, auth: action.payload }
+      return { ...state, token: action.payload }
     case "log_out":
-      return { ...state, auth: null }
+      return { ...state, token: null }
     default:
       return state
   }

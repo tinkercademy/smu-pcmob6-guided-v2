@@ -3,18 +3,20 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 import LoggedInTabStack from "./components/LoggedInTabStack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import SignInSignUpScreen from "./screens/SignInSignUpScreen";
+import { Provider, useSelector } from "react-redux";
+import store from "./redux/configureStore";
 
 const Stack = createStackNavigator();
 
-export default function App() {
+function App() {
   const [loading, setLoading] = useState(true);
   const [signedIn, setSignedIn] = useState(false);
 
+  const auth = useSelector((state) => state.auth);
+
   async function loadToken() {
-    const token = await AsyncStorage.getItem("token");
-    if (token) {
+    if (auth != null) {
       setSignedIn(true);
     }
     setLoading(false);
@@ -33,13 +35,21 @@ export default function App() {
         <Stack.Navigator
           mode="modal"
           headerMode="none"
-          initialRouteName={signedIn ? "Logged In" : "SignInSignUp"}
+          initialRouteName={signedIn != null ? "Logged In" : "SignInSignUp"}
           animationEnabled={false}>
         <Stack.Screen component={LoggedInTabStack} name="Logged In" />
         <Stack.Screen component={SignInSignUpScreen} name="SignInSignUp" />
       </Stack.Navigator>
     </NavigationContainer>
   );
+}
+
+export default function AppWrapper() {
+  return (
+    <Provider store={store}>
+      <App/>
+    </Provider>
+  )
 }
 
 const styles = StyleSheet.create({
