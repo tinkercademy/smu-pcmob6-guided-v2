@@ -82,11 +82,19 @@ export default function AccountScreen({ navigation }) {
   return (
     <View style={[styles.container, { alignItems: "center" }]}>
       <Text style={[styles.title, styles.text, { margin: 30 }]}> Hello {username} !</Text>
-      {profilePicture == null ? <View /> :
-        <TouchableWithoutFeedback onPress={changePicSize}>
-          <Animated.Image style={{ width: picSize.interpolate(sizeInterpolation), height: picSize.interpolate(sizeInterpolation), borderRadius: 200 }} source={{ uri: profilePicture?.uri }} />
-        </TouchableWithoutFeedback>
-      }
+      <View style={{height: 320, justifyContent: "center"}}>
+        {profilePicture == null ? <View /> :
+          <TouchableWithoutFeedback onPress={changePicSize}>
+            <Animated.Image
+              style={{
+                width: picSize.interpolate(sizeInterpolation),
+                height: picSize.interpolate(sizeInterpolation),
+                borderRadius: 200
+              }}
+              source={{ uri: profilePicture?.uri }} />
+          </TouchableWithoutFeedback>
+        }
+      </View>
       <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
           <Text style={{ marginTop: 10, fontSize: 20, color: "#0000EE" }}> No profile picture. Click to take one. </Text>
           </TouchableOpacity>
