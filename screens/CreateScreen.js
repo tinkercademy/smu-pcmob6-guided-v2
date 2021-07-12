@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { API, API_CREATE } from "../constants/API";
-import { lightStyles, commonStyles } from "../styles/commonStyles";
+import { lightStyles, darkStyles, commonStyles } from "../styles/commonStyles";
 import { useSelector } from "react-redux";
 
 export default function CreateScreen({ navigation }) {
