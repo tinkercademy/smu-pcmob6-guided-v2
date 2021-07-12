@@ -36,6 +36,8 @@ export default function SignInSignUpScreen({ navigation }) {
       console.log(response.data.access_token)
       dispatch({...logInAction(), payload: response.data.access_token })
       setLoading(false);
+      setUsername("");
+      setPassword("");
       navigation.navigate("Logged In");
     } catch (error) {
       setLoading(false);
@@ -86,6 +88,7 @@ export default function SignInSignUpScreen({ navigation }) {
           placeholder="Username:"
           placeholderTextColor="#003f5c"
           onChangeText={(username) => setUsername(username)}
+          value={username}
         />
       </View>
   
@@ -96,6 +99,7 @@ export default function SignInSignUpScreen({ navigation }) {
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
           onChangeText={(pw) => setPassword(pw)}
+          value={password}
         />
       </View>
 
@@ -107,6 +111,7 @@ export default function SignInSignUpScreen({ navigation }) {
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
             onChangeText={(pw) => setConfirmPassword(pw)}
+            value={confirmPassword}
           />
         </View>}
 
