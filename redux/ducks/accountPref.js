@@ -8,6 +8,22 @@ const initialState = {
   profilePicture: null
 };
 
+export function lightModeAction() {
+  return { type: LIGHT_ACTION }
+}
+
+export function darkModeAction() {
+  return { type: DARK_ACTION }
+}
+
+export function uploadPicAction() {
+  return { type: UPLOAD_PIC_ACTION }
+}
+
+export function deletePicAction() {
+  return { type: DELETE_PIC_ACTION }
+}
+
 export default function accountPrefReducer(state = initialState, action) {
   switch (action.type) {
     case "dark_mode":
