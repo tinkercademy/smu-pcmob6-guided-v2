@@ -16,8 +16,12 @@ export default function AccountScreen({ navigation }) {
   const profilePicture = useSelector((state) => state.accountPrefs.profilePicture);
   const dispatch = useDispatch();
 
-  const picSize = new Animated.Value(200);
-  
+  const picSize = new Animated.Value(0);
+  const sizeInterpolation = {
+    inputRange: [0, 0.5, 1],
+    outputRange: [200, 300, 200]
+  }  
+
   const styles = { ...commonStyles, ...isDark ? darkStyles : lightStyles };
 
   async function getUsername() {
@@ -54,11 +58,13 @@ export default function AccountScreen({ navigation }) {
   }
 
   function changePicSize() {
+    Animated.loop(
       Animated.timing(picSize, {
-        toValue: 300,
-        duration: 5000,
+        toValue: 1,
+        duration: 2500,
         useNativeDriver: false
-      }).start()
+      }),
+    ).start()
   }
 
   useEffect(() => {
@@ -78,7 +84,7 @@ export default function AccountScreen({ navigation }) {
       <Text style={[styles.title, styles.text, { margin: 30 }]}> Hello {username} !</Text>
       {profilePicture == null ? <View /> :
         <TouchableWithoutFeedback onPress={changePicSize}>
-          <Animated.Image style={{ width: picSize, height: picSize, borderRadius: 200 }} source={{ uri: profilePicture?.uri }} />
+          <Animated.Image style={{ width: picSize.interpolate(sizeInterpolation), height: picSize.interpolate(sizeInterpolation), borderRadius: 200 }} source={{ uri: profilePicture?.uri }} />
         </TouchableWithoutFeedback>
       }
       <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
