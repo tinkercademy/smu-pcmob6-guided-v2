@@ -7,11 +7,11 @@ import { useSelector } from "react-redux";
 
 export default function EditScreen({ navigation, route }) {
 
-  const styles = { ...lightStyles, ...commonStyles }
-
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const token = useSelector((state) => state.auth.token);
+  const isDark = useSelector((state) => state.accountPrefs.isDark);
+  const styles = { ...commonStyles, ...isDark ? darkStyles : lightStyles };
 
   useEffect(() => {
     const post = route.params.post

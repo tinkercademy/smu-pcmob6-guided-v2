@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator, TouchableOpacity, Text, View, Switch, Image } from "react-native";
-import { commonStyles, lightStyles } from "../styles/commonStyles";
+import { commonStyles, lightStyles, darkStyles } from "../styles/commonStyles";
 import axios from "axios";
 import { API, API_WHOAMI } from "../constants/API";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { lightModeAction, darkModeAction } from '../redux/ducks/accountPref';
 
 export default function AccountScreen({ navigation }) {
 
   const [username, setUsername] = useState(null);
-
-  const styles = { ...commonStyles, ...lightStyles };
+  
   const token = useSelector((state) => state.auth.token);
+  const isDark = useSelector((state) => state.accountPrefs.isDark);
+  const dispatch = useDispatch();
+  
+  const styles = { ...commonStyles, ...isDark ? darkStyles : lightStyles };
 
   async function getUsername() {
     console.log("---- Getting user name ----");
@@ -40,6 +44,10 @@ export default function AccountScreen({ navigation }) {
     navigation.navigate("SignInSignUp");
   }
 
+  function switchMode() {
+    dispatch(isDark ? lightModeAction() : darkModeAction())
+  }
+
   useEffect(() => {
     console.log("Setting up nav listener");
     // Check for when we come back to this screen
@@ -60,7 +68,9 @@ export default function AccountScreen({ navigation }) {
           </TouchableOpacity>
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", margin: 20}}>
         <Text style={[styles.content, styles.text]}> Dark Mode? </Text>
-        <Switch/>
+        <Switch
+          value={isDark}
+          onChange={switchMode}/>
       </View>
       <TouchableOpacity style={[styles.button]} onPress={signOut}>
         <Text style={styles.buttonText}>

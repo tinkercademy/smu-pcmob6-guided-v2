@@ -7,8 +7,9 @@ import { useSelector } from "react-redux";
 
 export default function CreateScreen({ navigation }) {
 
-  const styles = { ...lightStyles, ...commonStyles }
   const token = useSelector((state) => state.auth);
+  const isDark = useSelector((state) => state.accountPrefs.isDark);
+  const styles = {...commonStyles, ...isDark ? darkStyles : lightStyles };
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
