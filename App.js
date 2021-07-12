@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import LoggedInTabStack from "./components/LoggedInTabStack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -12,9 +12,11 @@ const Stack = createStackNavigator();
 function App() {
 
   const token = useSelector((state) => state.auth.token);
+  const isDark = useSelector((state) => state.accountPrefs.isDark);
 
   return (
     <NavigationContainer>
+      <StatusBar style={isDark ? "light" : "dark"}/>
         <Stack.Navigator
           mode="modal"
           headerMode="none"
