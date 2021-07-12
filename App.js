@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import LoggedInTabStack from "./components/LoggedInTabStack";
 import { NavigationContainer } from "@react-navigation/native";

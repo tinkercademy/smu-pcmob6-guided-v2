@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { commonStyles, lightStyles } from "../styles/commonStyles";
+import { commonStyles, lightStyles, darkStyles } from "../styles/commonStyles";
 import axios from "axios";
 import { API, API_POSTS } from "../constants/API";
 import { useSelector } from "react-redux";

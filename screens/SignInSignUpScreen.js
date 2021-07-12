@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, UIManager, LayoutAnimation, ActivityIndicator, Keyboard } from 'react-native';
 import { API, API_LOGIN, API_SIGNUP } from '../constants/API';
 import axios from 'axios';

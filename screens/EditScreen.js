@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
-import { commonStyles, lightStyles } from "../styles/commonStyles";
+import { commonStyles, lightStyles, darkStyles } from "../styles/commonStyles";
 import { API, API_POSTS } from "../constants/API";
 import axios from "axios";
 import { useSelector } from "react-redux";
