@@ -13,7 +13,7 @@ const initialState = {
   auth: null,
 }
 
-export default function blogAuthReducer(state = initialState) {
+export default function blogAuthReducer(state = initialState, action) {
   switch (action.type) {
     case "log_in":
       return { ...state, auth: action.payload }
