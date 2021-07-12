@@ -62,7 +62,7 @@ export default function IndexScreen({ navigation, route }) {
   }
 
   function addPost() {
-    
+    navigation.navigate("Add")
   }
 
   function deletePost() {
