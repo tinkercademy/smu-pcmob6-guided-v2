@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ActivityIndicator, TouchableOpacity, Text, View, Switch, Image, Animated } from "react-native";
+import { ActivityIndicator, TouchableOpacity, Text, View, Switch, Image, Animated, TouchableWithoutFeedback } from "react-native";
 import { commonStyles, lightStyles, darkStyles } from "../styles/commonStyles";
 import axios from "axios";
 import { API, API_WHOAMI } from "../constants/API";
@@ -15,6 +15,8 @@ export default function AccountScreen({ navigation }) {
   const isDark = useSelector((state) => state.accountPrefs.isDark);
   const profilePicture = useSelector((state) => state.accountPrefs.profilePicture);
   const dispatch = useDispatch();
+
+  const picSize = new Animated.Value(200);
   
   const styles = { ...commonStyles, ...isDark ? darkStyles : lightStyles };
 
@@ -51,6 +53,14 @@ export default function AccountScreen({ navigation }) {
     dispatch(changeModeAction())
   }
 
+  function changePicSize() {
+      Animated.timing(picSize, {
+        toValue: 300,
+        duration: 5000,
+        useNativeDriver: false
+      }).start()
+  }
+
   useEffect(() => {
     console.log("Setting up nav listener");
     // Check for when we come back to this screen
@@ -66,7 +76,11 @@ export default function AccountScreen({ navigation }) {
   return (
     <View style={[styles.container, { alignItems: "center" }]}>
       <Text style={[styles.title, styles.text, { margin: 30 }]}> Hello {username} !</Text>
-      { profilePicture == null ? <View/> : <Image source={{ uri: profilePicture?.uri }} style={{ width: 250, height: 250, borderRadius: 200}} />}
+      {profilePicture == null ? <View /> :
+        <TouchableWithoutFeedback onPress={changePicSize}>
+          <Animated.Image style={{ width: picSize, height: picSize, borderRadius: 200 }} source={{ uri: profilePicture?.uri }} />
+        </TouchableWithoutFeedback>
+      }
       <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
           <Text style={{ marginTop: 10, fontSize: 20, color: "#0000EE" }}> No profile picture. Click to take one. </Text>
           </TouchableOpacity>
