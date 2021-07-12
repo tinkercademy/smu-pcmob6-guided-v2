@@ -10,35 +10,18 @@ import store from "./redux/configureStore";
 const Stack = createStackNavigator();
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [signedIn, setSignedIn] = useState(false);
 
-  const auth = useSelector((state) => state.auth);
+  const token = useSelector((state) => state.auth.token);
 
-  async function loadToken() {
-    if (auth != null) {
-      setSignedIn(true);
-    }
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    loadToken();
-  }, []);
-
-  return loading ? (
-    <View style={styles.container}>
-      <ActivityIndicator />
-    </View>
-  ) : (
+  return (
     <NavigationContainer>
         <Stack.Navigator
           mode="modal"
           headerMode="none"
-          initialRouteName={signedIn != null ? "Logged In" : "SignInSignUp"}
+          initialRouteName={token != null ? "Logged In" : "SignInSignUp"}
           animationEnabled={false}>
-        <Stack.Screen component={LoggedInTabStack} name="Logged In" />
         <Stack.Screen component={SignInSignUpScreen} name="SignInSignUp" />
+        <Stack.Screen component={LoggedInTabStack} name="Logged In" />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -52,11 +35,3 @@ export default function AppWrapper() {
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
