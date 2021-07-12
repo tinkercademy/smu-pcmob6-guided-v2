@@ -12,9 +12,24 @@ export default function CreateScreen({ navigation }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  function savePost() {
-    
+  async function savePost() {
+    const post = {
+      "title": title,
+      "content": content, 
+    }
+    const token = await AsyncStorage.getItem("token");
+    try {
+      console.log(token);
+      const response = await axios.post(API + API_CREATE, post, {
+        headers: { Authorization: `JWT ${token}` }
+      });
+      console.log(response.data)
+      navigation.navigate("Index", { post: post })
+    } catch (error) {
+      console.log(error)
+    }
   }
+
 
   return (
     <View style={styles.container}>
