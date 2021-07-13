@@ -1,6 +1,7 @@
-export const CHANGE_MODE_ACTION = "change_mode";
-export const UPLOAD_PIC_ACTION = "profile_picture";
-export const DELETE_PIC_ACTION = "delete_photo";
+
+export const CHANGE_MODE = "change_mode";
+export const UPLOAD_PIC = "profile_picture";
+export const DELETE_PIC = "delete_photo";
 
 const initialState = {
   isDark: false,
@@ -8,26 +9,27 @@ const initialState = {
 };
 
 export function changeModeAction() {
-  return { type: CHANGE_MODE_ACTION }
+  return { type: CHANGE_MODE }
 }
 
 export function uploadPicAction() {
-  return { type: UPLOAD_PIC_ACTION }
+  return { type: UPLOAD_PIC }
 }
 
 export function deletePicAction() {
-  return { type: DELETE_PIC_ACTION }
+  return { type: DELETE_PIC }
 }
 
 export default function accountPrefReducer(state = initialState, action) {
   switch (action.type) {
-    case "change_mode":
-      return { ...state, isDark: !state.isDark };
-    case "profile_picture":
+    case CHANGE_MODE:
+      return { ...state, isDark: !state.isDark }
+    case UPLOAD_PIC_ACTION:
       return { ...state, profilePicture: action.payload }
-    case "delete_photo":
+    case DELETE_PIC:
       return { ...state, profilePicture: null }
     default:
       return state;
   }
 }
+
