@@ -24,7 +24,7 @@ export default function accountPrefReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_MODE:
       return { ...state, isDark: !state.isDark }
-    case UPLOAD_PIC_ACTION:
+    case UPLOAD_PIC:
       return { ...state, profilePicture: action.payload }
     case DELETE_PIC:
       return { ...state, profilePicture: null }
