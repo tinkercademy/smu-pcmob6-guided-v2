@@ -17,7 +17,7 @@ export default function blogAuthReducer(state = initialState, action) {
   switch (action.type) {
     case LOG_IN:
       return { ...state, token: action.payload }
-    case LOG_OU:
+    case LOG_OUT:
       return { ...state, token: null }
     default:
       return state
